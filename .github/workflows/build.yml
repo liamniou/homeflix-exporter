@@ -19,12 +19,16 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - id: version
+        # Dependabot-bumpable tag (YYYY.M.D.run) for gitops pins.
+        run: echo "tag=$(date -u +%Y.%-m.%-d).${{ github.run_number }}" >> "$GITHUB_OUTPUT"
       - uses: docker/build-push-action@v6
         with:
           context: .
           push: true
           tags: |
             ghcr.io/liamniou/homeflix-exporter:latest
+            ghcr.io/liamniou/homeflix-exporter:${{ steps.version.outputs.tag }}
             ghcr.io/liamniou/homeflix-exporter:${{ github.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
