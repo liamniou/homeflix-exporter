@@ -22,7 +22,7 @@ jobs:
       - id: version
         # Dependabot-bumpable tag (YYYY.M.D.run) for gitops pins.
         run: echo "tag=$(date -u +%Y.%-m.%-d).${{ github.run_number }}" >> "$GITHUB_OUTPUT"
-      - uses: docker/build-push-action@v6
+      - uses: docker/build-push-action@v7
         with:
           context: .
           push: true
